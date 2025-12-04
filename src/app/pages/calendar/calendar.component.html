@@ -1,0 +1,55 @@
+<app-header></app-header>
+
+<div class="calendar-container">
+  <div class="calendar-wrapper">
+    <div class="calendar-section">
+      <div class="calendar-header">
+        <button (click)="previousMonth()" class="nav-button">← Previous</button>
+        <h2>{{ monthYear }}</h2>
+        <button (click)="nextMonth()" class="nav-button">Next →</button>
+      </div>
+
+      <div class="weekdays">
+        <div *ngFor="let day of weekDays" class="weekday">{{ day }}</div>
+      </div>
+
+      <div class="calendar-grid">
+        <button 
+          *ngFor="let day of daysInMonth"
+          (click)="selectDate(day)"
+          [class.empty]="day === null"
+          [class.has-events]="hasEventsOnDate(day)"
+          [class.today]="isToday(day)"
+          [class.selected]="isSelected(day)"
+          class="calendar-day">
+          <span *ngIf="day" class="day-number">{{ day }}</span>
+          <span *ngIf="hasEventsOnDate(day)" class="event-indicator">●</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="events-section">
+      <h3>
+        {{ selectedDate ? (selectedDate | date:'MMMM d, yyyy') : 'Select a date' }}
+      </h3>
+
+      <div *ngIf="!selectedDate" class="no-selection">
+        <p>Click on a date to see events</p>
+      </div>
+
+      <div *ngIf="selectedDate && eventsOnSelectedDate.length === 0" class="no-events">
+        <p>No events on this date</p>
+      </div>
+
+      <div *ngFor="let event of eventsOnSelectedDate" class="event-item">
+        <div class="event-time">{{ event.time }}</div>
+        <div class="event-details">
+          <h4>{{ event.title }}</h4>
+          <p class="event-location">📍 {{ event.location }}</p>
+          <p class="event-category">{{ event.category }}</p>
+        </div>
+        <a [routerLink]="['/events', event.id]" class="view-link">View →</a>
+      </div>
+    </div>
+  </div>
+</div>

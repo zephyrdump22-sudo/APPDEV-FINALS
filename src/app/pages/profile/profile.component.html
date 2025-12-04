@@ -1,0 +1,51 @@
+<app-header></app-header>
+
+<div class="profile-container">
+  <div *ngIf="currentUser">
+    <div class="profile-header">
+      <h1>My Profile</h1>
+      <p class="username">{{ currentUser.name }}</p>
+      <p class="email">{{ currentUser.email }}</p>
+    </div>
+
+    <div class="profile-section">
+      <h2>My RSVPs</h2>
+
+      <div *ngIf="rsvpEvents.length === 0" class="no-rsvps">
+        <p>You haven't RSVP'd to any events yet.</p>
+        <a routerLink="/events" class="btn btn-primary">Browse Events</a>
+      </div>
+
+      <div *ngIf="rsvpEvents.length > 0" class="rsvp-grid">
+        <div *ngFor="let event of rsvpEvents" class="rsvp-card">
+          <div class="rsvp-card-image">
+            <img [src]="event.imageUrl" [alt]="event.title">
+            <span [ngClass]="getRsvpBadgeClass(event.id)">{{ getRsvpStatus(event.id) }}</span>
+          </div>
+          
+          <div class="rsvp-card-content">
+            <h3>{{ event.title }}</h3>
+            <p class="category">{{ event.category }}</p>
+            
+            <div class="event-meta">
+              <span class="meta-item">📅 {{ event.date | date:'MMM dd, yyyy' }}</span>
+              <span class="meta-item">🕐 {{ event.time }}</span>
+            </div>
+
+            <p class="location">📍 {{ event.location }}</p>
+
+            <div class="card-actions">
+              <a [routerLink]="['/events', event.id]" class="btn btn-small btn-secondary">View Event</a>
+              <button (click)="cancelRsvp(event.id)" class="btn btn-small btn-cancel">Cancel RSVP</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!currentUser" class="not-logged-in">
+    <p>Please log in to view your RSVPs</p>
+    <a routerLink="/login" class="btn btn-primary">Login</a>
+  </div>
+</div>

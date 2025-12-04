@@ -1,0 +1,124 @@
+.header {
+  background-color: var(--header-bg, #1a1a2e);
+  border-bottom: 2px solid var(--header-border, #0f3460);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo h1 {
+  margin: 0;
+  color: var(--primary, #00d4ff);
+  font-size: 1.5rem;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 1.5rem;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-menu a {
+  color: #e0e0e0;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.18s, background-color 0.18s;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+  color: var(--primary, #00d4ff);
+  background-color: rgba(0, 212, 255, 0.08);
+}
+
+.auth-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.user-menu {
+  position: relative;
+}
+
+/* Keep user button visually consistent with global buttons */
+.user-button {
+  background-color: transparent;
+  color: var(--primary, #00d4ff);
+  border: 1px solid var(--primary, #00d4ff);
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.18s;
+}
+
+.user-button:hover {
+  background-color: var(--primary, #00d4ff);
+  color: var(--header-bg, #1a1a2e);
+  border-color: var(--primary, #00d4ff);
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: var(--accent, #0f3460);
+  border: 1px solid var(--primary, #00d4ff);
+  border-radius: 6px;
+  margin-top: 0.5rem;
+  min-width: 150px;
+}
+
+.dropdown a,
+.dropdown button {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  color: #e0e0e0;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.18s;
+  text-decoration: none;
+}
+
+.dropdown a:hover,
+.dropdown button:hover {
+  background-color: var(--header-bg, #1a1a2e);
+  color: var(--primary, #00d4ff);
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .nav-menu {
+    flex-basis: 100%;
+    gap: 1rem;
+    order: 3;
+    justify-content: flex-start;
+  }
+}

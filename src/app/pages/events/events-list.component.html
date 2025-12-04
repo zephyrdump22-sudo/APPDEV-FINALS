@@ -1,0 +1,58 @@
+<app-header></app-header>
+
+<main class="events-container">
+  <section class="hero">
+    <h2>Community Events</h2>
+    <p>Discover and join local events in your community</p>
+  </section>
+
+  <div class="filters-section">
+    <div class="search-box">
+      <input 
+        type="text" 
+        placeholder="Search events..." 
+        [(ngModel)]="searchQuery"
+        (input)="onSearchChange()">
+    </div>
+
+    <div class="category-filters">
+      <button 
+        *ngFor="let category of categories"
+        [class.active]="selectedCategory === (category === 'All' ? '' : category)"
+        (click)="selectCategory(category)"
+        class="filter-btn">
+        {{ category }}
+      </button>
+    </div>
+  </div>
+
+  <div class="events-grid">
+    <div *ngIf="filteredEvents.length === 0" class="no-events">
+      <p>No events found. Try adjusting your filters.</p>
+    </div>
+
+    <div *ngFor="let event of filteredEvents" class="event-card">
+      <div class="event-image">
+        <img 
+          [src]="event.imageUrl" 
+          [alt]="event.title"
+          (error)="$event.target.src='https://via.placeholder.com/400x300?text=Event+Image'"
+          loading="lazy">
+      </div>
+      <div class="event-content">
+        <div class="event-header">
+          <h3>{{ event.title }}</h3>
+          <span class="category-badge">{{ event.category }}</span>
+        </div>
+        <p class="description">{{ event.description | slice:0:100 }}...</p>
+        <div class="event-details">
+          <span class="detail">📅 {{ event.date | date:'MMM dd, yyyy' }}</span>
+          <span class="detail">🕐 {{ event.time }}</span>
+          <span class="detail">📍 {{ event.location }}</span>
+          <span class="detail">👥 {{ event.attendees }} attending</span>
+        </div>
+        <a [routerLink]="['/events', event.id]" class="btn btn-primary">View Details</a>
+      </div>
+    </div>
+  </div>
+</main>

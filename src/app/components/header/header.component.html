@@ -1,0 +1,30 @@
+<header class="header">
+  <div class="header-container">
+    <div class="logo">
+      <h1>Community Events</h1>
+    </div>
+    
+    <nav class="nav-menu">
+      <a routerLink="/events" routerLinkActive="active">Events</a>
+      <a routerLink="/calendar" routerLinkActive="active">Calendar</a>
+      <a *ngIf="currentUser?.isAdmin" routerLink="/admin" routerLinkActive="active">Admin</a>
+    </nav>
+
+    <div class="auth-section">
+      <div *ngIf="!currentUser" class="auth-buttons">
+        <a routerLink="/login" class="btn btn-secondary">Login</a>
+        <a routerLink="/register" class="btn btn-primary">Sign Up</a>
+      </div>
+
+      <div *ngIf="currentUser" class="user-menu">
+        <button class="user-button" (click)="toggleUserMenu()">
+          {{ currentUser.name }}
+        </button>
+        <div *ngIf="showUserMenu" class="dropdown">
+          <a routerLink="/profile">My RSVPs</a>
+          <button (click)="logout()">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

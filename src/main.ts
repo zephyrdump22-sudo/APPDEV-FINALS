@@ -1,6 +1,15 @@
-import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { App } from './app/app';
+import { bootstrapApplication } from "@angular/platform-browser"
+import { provideRouter } from "@angular/router"
+import { provideAnimations } from "@angular/platform-browser/animations"
+import { provideHttpClient } from "@angular/common/http"
+import { initializeApp } from "firebase/app"
+import { AppComponent } from "./app/app.component"
+import { routes } from "./app/app.routes"
+import { firebaseConfig } from "./environments/firebase.config"
 
-bootstrapApplication(App, appConfig)
-  .catch((err) => console.error(err));
+// Initialize Firebase
+initializeApp(firebaseConfig)
+
+bootstrapApplication(AppComponent, {
+  providers: [provideRouter(routes), provideAnimations(), provideHttpClient()],
+}).catch((err) => console.error(err))

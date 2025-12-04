@@ -1,0 +1,83 @@
+<app-header></app-header>
+
+<main class="event-details-container" *ngIf="event">
+  <div class="back-button">
+    <a routerLink="/events">← Back to Events</a>
+  </div>
+
+  <div class="event-details-content">
+    <div class="event-image-section">
+      <img [src]="event.imageUrl" [alt]="event.title">
+    </div>
+
+    <div class="event-info">
+      <div class="event-header">
+        <div>
+          <span class="category-badge">{{ event.category }}</span>
+          <h1>{{ event.title }}</h1>
+        </div>
+      </div>
+
+      <div class="event-meta">
+        <div class="meta-item">
+          <span class="label">Date:</span>
+          <span class="value">{{ event.date | date:'EEEE, MMMM d, yyyy' }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="label">Time:</span>
+          <span class="value">{{ event.time }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="label">Location:</span>
+          <span class="value">{{ event.location }}</span>
+        </div>
+        <div class="meta-item">
+          <span class="label">Attendees:</span>
+          <span class="value">{{ event.attendees }} people attending</span>
+        </div>
+      </div>
+
+      <div class="description">
+        <h3>About this event</h3>
+        <p>{{ event.description }}</p>
+      </div>
+
+      <div class="rsvp-section">
+        <h3>Will you attend?</h3>
+        <div class="rsvp-buttons">
+          <button 
+            (click)="rsvp('going')" 
+            [class.active]="rsvpStatus === 'going'"
+            class="btn btn-going">
+            ✓ Going
+          </button>
+          <button 
+            (click)="rsvp('maybe')" 
+            [class.active]="rsvpStatus === 'maybe'"
+            class="btn btn-maybe">
+            ? Maybe
+          </button>
+          <button 
+            (click)="rsvp('not-going')" 
+            [class.active]="rsvpStatus === 'not-going'"
+            class="btn btn-not-going">
+            ✗ Not Going
+          </button>
+        </div>
+
+        <div *ngIf="rsvpStatus" class="rsvp-actions">
+          <button (click)="toggleReminder()" [class.active]="reminderEnabled" class="btn btn-reminder">
+            {{ reminderEnabled ? '🔔 Reminder On' : '🔕 Reminder Off' }}
+          </button>
+          <button (click)="cancelRsvp()" class="btn btn-cancel">
+            Cancel RSVP
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div *ngIf="!event" class="loading">
+  <p>Event not found</p>
+</div>

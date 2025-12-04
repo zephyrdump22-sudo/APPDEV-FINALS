@@ -1,0 +1,74 @@
+<app-header></app-header>
+
+<div class="admin-container">
+  <div *ngIf="currentUser?.isAdmin">
+    <h1>Admin Dashboard</h1>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">{{ userEvents.length }}</div>
+        <div class="stat-label">Events Created</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ totalEvents }}</div>
+        <div class="stat-label">Total Community Events</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">{{ totalAttendees }}</div>
+        <div class="stat-label">Total Attendees</div>
+      </div>
+    </div>
+
+    <div class="dashboard-section">
+      <div class="section-header">
+        <h2>Your Events</h2>
+        <a routerLink="/admin/events/new" class="btn btn-primary">+ Create New Event</a>
+      </div>
+
+      <div *ngIf="userEvents.length === 0" class="no-events">
+        <p>You haven't created any events yet.</p>
+        <a routerLink="/admin/events/new" class="btn btn-primary">Create Your First Event</a>
+      </div>
+
+      <table *ngIf="userEvents.length > 0" class="events-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Date</th>
+            <th>Location</th>
+            <th>Attendees</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let event of userEvents">
+            <td>{{ event.title }}</td>
+            <td>{{ event.date | date:'MMM dd, yyyy' }}</td>
+            <td>{{ event.location }}</td>
+            <td>{{ event.attendees }}</td>
+            <td class="actions">
+              <a [routerLink]="['/admin/events', event.id, 'edit']" class="btn btn-small btn-secondary">Edit</a>
+              <button 
+                (click)="deleteEvent(event.id)" 
+                [class.confirm]="deleteConfirmId === event.id"
+                class="btn btn-small btn-danger">
+                {{ deleteConfirmId === event.id ? 'Confirm Delete' : 'Delete' }}
+              </button>
+              <button 
+                *ngIf="deleteConfirmId === event.id" 
+                (click)="cancelDelete()" 
+                class="btn btn-small btn-secondary">
+                Cancel
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div *ngIf="!currentUser?.isAdmin" class="access-denied">
+    <p>You don't have permission to access this page.</p>
+    <a routerLink="/events">Back to Events</a>
+  </div>
+</div>
